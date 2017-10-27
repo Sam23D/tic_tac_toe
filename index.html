@@ -1,0 +1,65 @@
+<html>
+<head>
+  <style>
+    /* you can style your program here */
+    body{
+      display: flex;
+      flex-direction: row;
+      justify-content: center
+    }
+    .cell-button{
+      background: #fff;
+      border: 1px solid #999;
+      float: left;
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 34px;
+      height: 34px;
+      margin-right: -1px;
+      margin-top: -1px;
+      padding: 0;
+      text-align: center;
+      width: 35px;
+    }
+    .cell-button:focus {
+      outline: none;
+    }
+    .restart-button{
+      max-width: 150px;
+    }
+    .board{
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 105px;
+    }
+    .history{
+      width: 200px;
+      flex-grow: 1;
+    }
+    .history h3{
+      margin: 0 16px;
+    }
+    .main-container{
+      width: 480px;
+      display: flex;
+      flex-direction: column
+    }
+    .board-score-container{
+      display: flex;
+      flex-direction: row;
+      height: 240px;
+    }
+    .board-container{
+      display: flex;
+      align-items: center
+    }
+  </style>
+</head>
+<body>
+    <script src="main.js"></script>
+  <script>
+    var app = Elm.Main.fullscreen()
+    // you can use ports and stuff here
+  </script>
+</body>
+</html>

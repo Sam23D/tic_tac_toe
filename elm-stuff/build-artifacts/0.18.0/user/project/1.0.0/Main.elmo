@@ -1,0 +1,570 @@
+var _user$project$Main$boxValue = function (someValue) {
+	var _p0 = someValue;
+	switch (_p0.ctor) {
+		case 'Nothing':
+			return '';
+		case 'Cross':
+			return 'X';
+		default:
+			return 'O';
+	}
+};
+var _user$project$Main$diagonalWinConfig = {
+	ctor: '::',
+	_0: {
+		ctor: '::',
+		_0: 0,
+		_1: {
+			ctor: '::',
+			_0: 4,
+			_1: {
+				ctor: '::',
+				_0: 8,
+				_1: {ctor: '[]'}
+			}
+		}
+	},
+	_1: {
+		ctor: '::',
+		_0: {
+			ctor: '::',
+			_0: 2,
+			_1: {
+				ctor: '::',
+				_0: 4,
+				_1: {
+					ctor: '::',
+					_0: 6,
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		_1: {ctor: '[]'}
+	}
+};
+var _user$project$Main$verticalWinConfig = {
+	ctor: '::',
+	_0: {
+		ctor: '::',
+		_0: 0,
+		_1: {
+			ctor: '::',
+			_0: 3,
+			_1: {
+				ctor: '::',
+				_0: 6,
+				_1: {ctor: '[]'}
+			}
+		}
+	},
+	_1: {
+		ctor: '::',
+		_0: {
+			ctor: '::',
+			_0: 1,
+			_1: {
+				ctor: '::',
+				_0: 4,
+				_1: {
+					ctor: '::',
+					_0: 7,
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				ctor: '::',
+				_0: 2,
+				_1: {
+					ctor: '::',
+					_0: 5,
+					_1: {
+						ctor: '::',
+						_0: 8,
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _user$project$Main$horizontalWinConfig = {
+	ctor: '::',
+	_0: {
+		ctor: '::',
+		_0: 0,
+		_1: {
+			ctor: '::',
+			_0: 1,
+			_1: {
+				ctor: '::',
+				_0: 2,
+				_1: {ctor: '[]'}
+			}
+		}
+	},
+	_1: {
+		ctor: '::',
+		_0: {
+			ctor: '::',
+			_0: 3,
+			_1: {
+				ctor: '::',
+				_0: 4,
+				_1: {
+					ctor: '::',
+					_0: 5,
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				ctor: '::',
+				_0: 6,
+				_1: {
+					ctor: '::',
+					_0: 7,
+					_1: {
+						ctor: '::',
+						_0: 8,
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			_1: {ctor: '[]'}
+		}
+	}
+};
+var _user$project$Main$isOfValue = F2(
+	function (boardVal, toCompare) {
+		return _elm_lang$core$Native_Utils.eq(boardVal, toCompare);
+	});
+var _user$project$Main$isTruthy = function (val) {
+	return _elm_lang$core$Native_Utils.eq(val, true);
+};
+var _user$project$Main$isWinConfToAValue = F2(
+	function (confOfSqrVals, givenValue) {
+		var isOfGivenValue = function (value) {
+			return A2(_user$project$Main$isOfValue, value, givenValue);
+		};
+		var verifiedValues = A2(
+			_elm_lang$core$List$map,
+			function (row) {
+				return A2(_elm_lang$core$List$all, isOfGivenValue, row);
+			},
+			confOfSqrVals);
+		return A2(_elm_lang$core$List$any, _user$project$Main$isTruthy, verifiedValues);
+	});
+var _user$project$Main$makeMove = F3(
+	function (boardState, index, currValue) {
+		var _p1 = A2(_elm_lang$core$Array$get, index, boardState);
+		if ((_p1.ctor === 'Just') && (_p1._0.ctor === 'Nothing')) {
+			return A3(_elm_lang$core$Array$set, index, currValue, boardState);
+		} else {
+			return boardState;
+		}
+	});
+var _user$project$Main$validMove = F2(
+	function (boardState, index) {
+		var _p2 = A2(_elm_lang$core$Array$get, index, boardState);
+		if ((_p2.ctor === 'Just') && (_p2._0.ctor === 'Nothing')) {
+			return true;
+		} else {
+			return false;
+		}
+	});
+var _user$project$Main$checkConditionsForMove = function (model) {
+	return model.ended ? false : true;
+};
+var _user$project$Main$viewPlayer = function (model) {
+	return model.gameWon ? A2(
+		_elm_lang$html$Html$h2,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					_elm_lang$core$Basics$toString(model.winner),
+					' wins!!!')),
+			_1: {ctor: '[]'}
+		}) : (model.ended ? A2(
+		_elm_lang$html$Html$h2,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text('Game ended in a tie'),
+			_1: {ctor: '[]'}
+		}) : A2(
+		_elm_lang$html$Html$h2,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'Playing: ',
+					_elm_lang$core$Basics$toString(model.currentPlayer))),
+			_1: {ctor: '[]'}
+		}));
+};
+var _user$project$Main$HistoryFrame = F2(
+	function (a, b) {
+		return {board: a, currentPlayer: b};
+	});
+var _user$project$Main$Model = F7(
+	function (a, b, c, d, e, f, g) {
+		return {board: a, renderedBoard: b, currentPlayer: c, ended: d, moveHistory: e, winner: f, gameWon: g};
+	});
+var _user$project$Main$RestartGame = {ctor: 'RestartGame'};
+var _user$project$Main$BoardHovered = {ctor: 'BoardHovered'};
+var _user$project$Main$ShowHistoicalBoard = function (a) {
+	return {ctor: 'ShowHistoicalBoard', _0: a};
+};
+var _user$project$Main$moveHistoryItemView = function (historyMove) {
+	return A2(
+		_elm_lang$html$Html$li,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$button,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Events$onClick(
+						_user$project$Main$ShowHistoicalBoard(historyMove.board)),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'See ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Basics$toString(historyMove.currentPlayer),
+								' move'))),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Main$moveHistoryView = function (moveHistory) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('history'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$h3,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Move history'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$ol,
+					{ctor: '[]'},
+					A2(
+						_elm_lang$core$List$map,
+						_user$project$Main$moveHistoryItemView,
+						_elm_lang$core$List$reverse(moveHistory))),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Main$Press = function (a) {
+	return {ctor: 'Press', _0: a};
+};
+var _user$project$Main$boardCell = F2(
+	function (innerValue, index) {
+		return A2(
+			_elm_lang$html$Html$button,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onClick(
+					_user$project$Main$Press(index)),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('cell-button'),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(
+					_user$project$Main$boxValue(innerValue)),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Main$board = F2(
+	function (config, boardState) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('board'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Events$onMouseEnter(_user$project$Main$BoardHovered),
+					_1: {ctor: '[]'}
+				}
+			},
+			A3(
+				_elm_lang$core$List$map2,
+				_user$project$Main$boardCell,
+				_elm_lang$core$Array$toList(boardState),
+				A2(_elm_lang$core$List$range, 0, 9)));
+	});
+var _user$project$Main$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('main-container'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$h1,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Tic Tac Toe'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$button,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$RestartGame),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('restart-button'),
+							_1: {ctor: '[]'}
+						}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Restart Game'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Main$viewPlayer(model),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('board-score-container'),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('board-container'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: A2(
+											_user$project$Main$board,
+											{},
+											model.renderedBoard),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: _user$project$Main$moveHistoryView(model.moveHistory),
+									_1: {ctor: '[]'}
+								}
+							}),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		});
+};
+var _user$project$Main$None = {ctor: 'None'};
+var _user$project$Main$Circle = {ctor: 'Circle'};
+var _user$project$Main$Cross = {ctor: 'Cross'};
+var _user$project$Main$getPlayerSymbol = function (playerNum) {
+	var _p3 = playerNum;
+	if (_p3.ctor === 'Player1') {
+		return _user$project$Main$Cross;
+	} else {
+		return _user$project$Main$Circle;
+	}
+};
+var _user$project$Main$Nothing = {ctor: 'Nothing'};
+var _user$project$Main$emptyBoardState = function (size) {
+	return A2(_elm_lang$core$Array$repeat, size, _user$project$Main$Nothing);
+};
+var _user$project$Main$anyMoveLeft = function (board) {
+	return A2(
+		_elm_lang$core$List$any,
+		function (cell) {
+			return _elm_lang$core$Native_Utils.eq(cell, _user$project$Main$Nothing);
+		},
+		_elm_lang$core$Array$toList(board));
+};
+var _user$project$Main$getBoardValue = F2(
+	function (board, index) {
+		var given = A2(_elm_lang$core$Array$get, index, board);
+		var _p4 = given;
+		if (_p4.ctor === 'Just') {
+			return _p4._0;
+		} else {
+			return _user$project$Main$Nothing;
+		}
+	});
+var _user$project$Main$boardValuesAtIndexes = F2(
+	function (board, indexList) {
+		return A2(
+			_elm_lang$core$List$map,
+			function (index) {
+				return A2(_user$project$Main$getBoardValue, board, index);
+			},
+			indexList);
+	});
+var _user$project$Main$extractBoardWithConf = F2(
+	function (board, conf) {
+		var boardList = _elm_lang$core$Array$toList(board);
+		return A2(
+			_elm_lang$core$List$map,
+			function (index) {
+				return A2(_user$project$Main$boardValuesAtIndexes, board, index);
+			},
+			conf);
+	});
+var _user$project$Main$hasAnyWinConf = F2(
+	function (board, player) {
+		var isWinConfToPlayer = function (conf) {
+			return A2(
+				_user$project$Main$isWinConfToAValue,
+				conf,
+				_user$project$Main$getPlayerSymbol(player));
+		};
+		var diagonalConf = A2(_user$project$Main$extractBoardWithConf, board, _user$project$Main$diagonalWinConfig);
+		var verticalConf = A2(_user$project$Main$extractBoardWithConf, board, _user$project$Main$verticalWinConfig);
+		var horizontalConf = A2(_user$project$Main$extractBoardWithConf, board, _user$project$Main$horizontalWinConfig);
+		var extractedConfigurations = A2(
+			_elm_lang$core$List$map,
+			isWinConfToPlayer,
+			{
+				ctor: '::',
+				_0: horizontalConf,
+				_1: {
+					ctor: '::',
+					_0: verticalConf,
+					_1: {
+						ctor: '::',
+						_0: diagonalConf,
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+		return {
+			ctor: '_Tuple2',
+			_0: A2(_elm_lang$core$List$any, _user$project$Main$isTruthy, extractedConfigurations),
+			_1: player
+		};
+	});
+var _user$project$Main$Player2 = {ctor: 'Player2'};
+var _user$project$Main$Player1 = {ctor: 'Player1'};
+var _user$project$Main$initialModel = {
+	board: _user$project$Main$emptyBoardState(9),
+	renderedBoard: _user$project$Main$emptyBoardState(9),
+	currentPlayer: _user$project$Main$Player1,
+	ended: false,
+	moveHistory: {ctor: '[]'},
+	winner: _user$project$Main$Player1,
+	gameWon: false
+};
+var _user$project$Main$model = _user$project$Main$initialModel;
+var _user$project$Main$nextplayerTurn = function (user) {
+	var _p5 = user;
+	if (_p5.ctor === 'Player1') {
+		return _user$project$Main$Player2;
+	} else {
+		return _user$project$Main$Player1;
+	}
+};
+var _user$project$Main$processPlayerMove = F2(
+	function (model, index) {
+		if (_user$project$Main$checkConditionsForMove(model)) {
+			var _p6 = A2(_user$project$Main$validMove, model.board, index);
+			if (_p6 === true) {
+				var currentPlayer = _user$project$Main$nextplayerTurn(model.currentPlayer);
+				var playerValue = _user$project$Main$getPlayerSymbol(model.currentPlayer);
+				var newBoard = A3(_user$project$Main$makeMove, model.board, index, playerValue);
+				var _p7 = A2(_user$project$Main$hasAnyWinConf, newBoard, model.currentPlayer);
+				var isInWinConf = _p7._0;
+				var player = _p7._1;
+				var noMovesLeft = !_user$project$Main$anyMoveLeft(newBoard);
+				var isGameEnded = isInWinConf || noMovesLeft;
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{
+						currentPlayer: currentPlayer,
+						board: newBoard,
+						renderedBoard: newBoard,
+						gameWon: isInWinConf,
+						moveHistory: {
+							ctor: '::',
+							_0: {board: newBoard, currentPlayer: model.currentPlayer},
+							_1: model.moveHistory
+						},
+						ended: isGameEnded,
+						winner: player
+					});
+			} else {
+				return model;
+			}
+		} else {
+			return model;
+		}
+	});
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p8 = msg;
+		switch (_p8.ctor) {
+			case 'None':
+				return model;
+			case 'Press':
+				return A2(_user$project$Main$processPlayerMove, model, _p8._0);
+			case 'ShowHistoicalBoard':
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{renderedBoard: _p8._0});
+			case 'BoardHovered':
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{renderedBoard: model.board});
+			default:
+				return _user$project$Main$initialModel;
+		}
+	});
+var _user$project$Main$main = _elm_lang$html$Html$beginnerProgram(
+	{model: _user$project$Main$model, update: _user$project$Main$update, view: _user$project$Main$view})();
